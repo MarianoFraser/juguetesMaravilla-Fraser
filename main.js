@@ -47,6 +47,9 @@ const mostrarProductos = () => {
                 <div class= "card-body">
                     <h5> ${producto.nombre}</h5>
                     <p> $${producto.precio}</p>
+                    <button class="btn colorBoton" id="botonRestar${producto.id}">-</button>
+                    <input type="text" class="imputCantidad" value="1" id="cantidad${producto.id}">
+                    <button class="btn colorBoton" id="botonMas${producto.id}">+</button>
                     <button class="btn colorBoton" id="boton${producto.id}" > Agregar al Carrito </button>
                 </div>
             </div>
@@ -58,20 +61,51 @@ const mostrarProductos = () => {
         boton.addEventListener("click",() => {
             agregarAlCarrito(producto.id);
         })
+        //* Sumar cantidad de compra
+        const botonMas = document.getElementById(`botonMas${producto.id}`);
+        botonMas.addEventListener("click",() => {
+            aumentarCantidad(producto.id);
+        })
+        //* Restar cantidad de compra
+        const botonRestar = document.getElementById(`botonRestar${producto.id}`);
+        botonRestar.addEventListener("click",() => {
+            restarCantidad(producto.id);
+        })
     })
 }
+
 mostrarProductos();
+console.log(document.getElementById("cantidad1").value);
 
 const agregarAlCarrito = (id) => {
     const productoEnCarrito = carrito.find(producto => producto.id === id);
+    const aumentarCantidad = document.getElementById("cantidad"+id).value; 
     if(productoEnCarrito){
+        for(i=0; i<aumentarCantidad;i++){
         productoEnCarrito.cantidad++;
+        }
     }else {
         const producto = productos.find(producto => producto.id === id);
         carrito.push(producto);
+        producto.cantidad=1;
+        for(i=1; i<aumentarCantidad;i++){
+            producto.cantidad++;
+        }
     }
     localStorage.setItem("carrito", JSON.stringify(carrito));
     calcularTotal();
+    
+}
+
+const aumentarCantidad = (id) => {
+    let cantidad = document.getElementById("cantidad"+id);
+    cantidad.value++;
+}
+const restarCantidad = (id) => {
+    let cantidad = document.getElementById("cantidad"+id);
+    if (cantidad.value > 0) {
+        cantidad.value--;
+    }
 }
 
 //* Mostrar y modificar el carrito de compras

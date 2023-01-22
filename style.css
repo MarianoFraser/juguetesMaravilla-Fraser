@@ -2,7 +2,7 @@
     width: 150px;
     height: 150px;
     object-fit: contain;
-    margint-top: 1rem;
+    margin-top: 1rem;
 }
 .card{
     display: flex;
@@ -16,4 +16,10 @@
 .colorBoton:hover {
     background-color: green;
     color: white;
+}
+.contenedorBoton{
+    margin-bottom: 5px;
+}
+.imputCantidad{
+    width: 10%;
 }
